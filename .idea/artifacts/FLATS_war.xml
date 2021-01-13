@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="FLATS:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>FLATS</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="FLATS_TOMCAT.war">
+      <element id="artifact" artifact-name="FLATS:war exploded" />
+    </root>
+  </artifact>
+</component>
