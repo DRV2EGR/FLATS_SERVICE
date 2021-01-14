@@ -47,11 +47,34 @@ public class restfull {
 
     // TODO: Добавить методы отображений просто квартиры и просто челика
 
-    @RequestMapping("/ind")
+    /**
+     * Отрисовка основной страницы без параметров
+     * @apiNote JSP page
+     *
+     * TODO: add MVC Controller
+     *
+     * @param model - модель отрисовки MVC Controller
+     * @return - имя jsp файла страницы.
+     */
+    @RequestMapping("/")
     public String index(Model model) {
-        myFlatsRep.refresh();
+        myFlatsRep.refresh(); // Обновляем базу
 
-        model.addAttribute("flats", myFlatsRep.getFlats());
+        // На случай, если менее 20
+        int flatsCounter = myFlatsRep.getFlats().size();
+        int n = 0;
+        if (myFlatsRep.getFlats().size() >= 20) {
+            n = flatsCounter;
+        } else {
+            n = myFlatsRep.getFlats().size();
+        }
+
+        //Страничный счетчик
+        int devidedForPagesFlats = flatsCounter / 20;
+        if (flatsCounter % 20 != 0) { devidedForPagesFlats+=1; }
+
+        model.addAttribute("flats", myFlatsRep.getNFlats(n)); // Сами квартиры выбранной страницы (сейчас т.к. главная - первые n aka. 20)
+        model.addAttribute("flatsPages", devidedForPagesFlats); // Сколько страниц с квартирами
         //System.out.println(myFlatsRep.getFlats());
 
         return "index";

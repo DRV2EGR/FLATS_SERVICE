@@ -140,7 +140,7 @@ public class Flats_Repository {
             ResultSet resultOwners = statment.executeQuery("select id, name, secondName, phone from FLATS.owners");
 
             while (resultOwners.next()) {
-                owners.add(new Owner(resultOwners.getString("name"), resultOwners.getString("secondName"), resultOwners.getInt("phone")));
+                owners.add(new Owner(resultOwners.getString("name"), resultOwners.getString("secondName"), resultOwners.getInt("phone"), resultOwners.getInt("id")));
 
                 PreparedStatement quarryForGetFlats = connection.prepareStatement("select id, adress, numOfRooms, price from FLATS.flats where ownerid = ?");
 
@@ -149,7 +149,7 @@ public class Flats_Repository {
                 try {
                     ResultSet resultFlatsForCurrentOwner = quarryForGetFlats.executeQuery();
                     while (resultFlatsForCurrentOwner.next()) {
-                        flats.add(new Flat(resultFlatsForCurrentOwner.getString("adress"), resultFlatsForCurrentOwner.getInt("numOfRooms"), owners.get(owners.size() - 1).getId(), resultFlatsForCurrentOwner.getInt("price")));
+                        flats.add(new Flat(resultFlatsForCurrentOwner.getString("adress"), resultFlatsForCurrentOwner.getInt("numOfRooms"), owners.get(owners.size() - 1), resultFlatsForCurrentOwner.getInt("price")));
 
                         PreparedStatement quarryForGetFlatsImg = connection.prepareStatement("select img_url from FLATS.flats_imgs where flat_id = ?");
                         quarryForGetFlatsImg.setInt(1, resultFlatsForCurrentOwner.getInt("id"));
@@ -202,5 +202,9 @@ public class Flats_Repository {
 
     public List<Flat> getFlats() {
         return flats;
+    }
+
+    public List<Flat> getNFlats(int n) {
+        return flats.subList(0, n);
     }
 }

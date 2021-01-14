@@ -17,6 +17,14 @@ public class Owner {
         this.phone = phone;
     }
 
+    @JsonCreator
+    public Owner(@JsonProperty("name") String name, @JsonProperty("secondName") String secondName, @JsonProperty("phone") int phone, @JsonProperty("id") int id) {
+        this.name = name;
+        this.secondName = secondName;
+        this.phone = phone;
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

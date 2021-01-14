@@ -35,8 +35,14 @@
             background: #84a4cb;
         }
 
-        .img {
-            width: 300px;
+        img {
+            width: 250px;
+            height: 300px;
+
+            padding: 15px;
+
+            margin-left: 15px;
+            margin-right: 10px;
         }
 
         p {
@@ -51,6 +57,18 @@
         a {
             text-decoration: none;
             text-decoration-line: none;
+        }
+
+        .card-content {
+            margin-top: 30px;
+            margin-left: 50px;
+        }
+
+        .price {
+            color: black;
+
+            font-weight: bold;
+            font-size: 2em;
         }
 
     </style>
@@ -69,7 +87,7 @@
                         </div>
 
                         <div class="card-content">
-                            <p>${flat.getPrice()}</p>
+                            <p>Цена: <span class="price">${flat.getPrice()}</span></p>
 
                             <p>${flat.getAdress()}</p>
 
@@ -85,5 +103,18 @@
         </div>
     </div>
 
+    <script>
+        function moneyFormat(n) {
+
+            return parseFloat(n).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1 ").replace('.', ',');
+        }
+
+
+        let prices = document.getElementsByClassName("price");
+
+        for (i = 0; i < prices.length; ++i) {
+            prices[i].textContent = moneyFormat(prices[i].textContent);
+        }
+    </script>
 </body>
 </html>
