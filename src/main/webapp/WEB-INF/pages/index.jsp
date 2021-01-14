@@ -65,7 +65,7 @@
 
                     <div class="card">
                         <div class="img">
-
+                            <img src="${flat.getImgByIndex(0)}">
                         </div>
 
                         <div class="card-content">

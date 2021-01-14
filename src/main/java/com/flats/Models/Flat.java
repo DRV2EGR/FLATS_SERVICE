@@ -51,4 +51,12 @@ public class Flat {
     public int getOwnerId() { return ownerId; }
 
     public List<String> getImgs() { return imgs; }
+
+    public String getImgByIndex(int index) {
+        if (index + 1 <= imgs.size() ) {
+            return imgs.get(index);
+        }
+
+        return "";
+    }
 }
