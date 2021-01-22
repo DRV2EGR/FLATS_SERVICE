@@ -1,5 +1,13 @@
-com\flats\Controllers\MainController.class
-com\flats\Controllers\restfull.class
-com\flats\Models\Flat.class
-com\flats\Repositiries\Flats_Repository.class
 com\flats\Models\Owner.class
+com\flats\controller\MainController.class
+com\flats\Models\Flat.class
+com\flats\controller\restfull.class
+com\flats\entity\enums\UserRoleEnum.class
+com\flats\service\UserDetailsServiceImpl.class
+com\flats\controller\LoginController.class
+com\flats\config\Initializer.class
+com\flats\service\UserService.class
+com\flats\Repositiries\Flats_Repository.class
+com\flats\service\UserServiceImpl.class
+com\flats\config\WebAppConfig.class
+com\flats\config\SecurityConfig.class
