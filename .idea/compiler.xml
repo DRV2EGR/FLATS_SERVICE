@@ -6,11 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="FLATS_SERVICE" />
         <module name="FLATS" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="FLATS" target="1.8" />
+      <module name="FLATS_SERVICE" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

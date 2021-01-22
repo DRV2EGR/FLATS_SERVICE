@@ -21,7 +21,7 @@ public class Flats_Repository {
     public boolean AddOwner(String name, String secondName, int phone) {
         try {
             Class.forName("org.postgresql.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/postgres?currentSchema=FLATS", "postgres", "");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/postgres?currentSchema=FLATS", "postgres", "pass");
             // "jdbc:postgresql://localhost/postgres?currentSchema=education", "postgres", "123456"
 
             PreparedStatement quary = connection.prepareStatement("insert into flats.owners (name, secondName, phone) values (?, ?, ?);");
@@ -46,7 +46,7 @@ public class Flats_Repository {
     public boolean AddFlat(String adress, int numOfRooms, int ownerId, int price) {
         try {
             Class.forName("org.postgresql.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/postgres?currentSchema=FLATS", "postgres", "");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/postgres?currentSchema=FLATS", "postgres", "pass");
             // "jdbc:postgresql://localhost/postgres?currentSchema=education", "postgres", "123456"
 
             /* If we dont have owner id...
@@ -83,7 +83,7 @@ public class Flats_Repository {
     public boolean AddFlatWithIMGs(String adress, int numOfRooms, int ownerId, int price, List<String> imgs) {
         try {
             Class.forName("org.postgresql.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/postgres?currentSchema=FLATS", "postgres", "");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/postgres?currentSchema=FLATS", "postgres", "pass");
 
 
             PreparedStatement quarryAddSellingFlatToOwner = connection.prepareStatement("insert into flats (ownerid, adress, numOfRooms, price) values (?, ?, ?, ?)");
@@ -132,7 +132,7 @@ public class Flats_Repository {
         try {
             Class.forName("org.postgresql.Driver");
 
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/postgres?currentSchema=FLATS", "postgres", "");
+            Connection connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1/postgres?currentSchema=FLATS", "postgres", "pass");
             // "jdbc:postgresql://localhost/postgres?currentSchema=education", "postgres", "123456"
 
             Statement statment = connection.createStatement();
@@ -140,16 +140,39 @@ public class Flats_Repository {
             ResultSet resultOwners = statment.executeQuery("select id, name, secondName, phone from FLATS.owners");
 
             while (resultOwners.next()) {
-                owners.add(new Owner(resultOwners.getString("name"), resultOwners.getString("secondName"), resultOwners.getInt("phone")));
+                owners.add(new Owner(resultOwners.getString("name"), resultOwners.getString("secondName"), resultOwners.getInt("phone"), resultOwners.getInt("id")));
 
-                PreparedStatement quarryForGetFlats = connection.prepareStatement("select adress, numOfRooms, price from FLATS.flats where ownerid = ?");
+                PreparedStatement quarryForGetFlats = connection.prepareStatement("select id, adress, numOfRooms, price from FLATS.flats where ownerid = ?");
 
                 quarryForGetFlats.setInt(1, resultOwners.getInt("id"));
 
                 try {
                     ResultSet resultFlatsForCurrentOwner = quarryForGetFlats.executeQuery();
                     while (resultFlatsForCurrentOwner.next()) {
-                        flats.add(new Flat(resultFlatsForCurrentOwner.getString("adress"), resultFlatsForCurrentOwner.getInt("numOfRooms"), owners.get(owners.size() - 1).getId(), resultFlatsForCurrentOwner.getInt("price")));
+                        flats.add(new Flat(resultFlatsForCurrentOwner.getString("adress"), resultFlatsForCurrentOwner.getInt("numOfRooms"), owners.get(owners.size() - 1), resultFlatsForCurrentOwner.getInt("price")));
+
+                        PreparedStatement quarryForGetFlatsImg = connection.prepareStatement("select img_url from FLATS.flats_imgs where flat_id = ?");
+                        quarryForGetFlatsImg.setInt(1, resultFlatsForCurrentOwner.getInt("id"));
+
+                        try {
+                            ResultSet resultImgsForCurFlat = quarryForGetFlatsImg.executeQuery();
+
+                            while (resultImgsForCurFlat.next()) {
+                                flats.get(flats.size()-1).getImgs().add(resultImgsForCurFlat.getString("img_url"));
+                            }
+                        } catch (SQLException e) {
+                            //pass
+                        }
+
+                        if (flats.get(flats.size()-1).getImgs().size() == 0) {
+                            String mmm = "https://i.pinimg.com/736x/30/30/e3/3030e3fa40eb4fd810320bbff7f0a1c4.jpg";
+
+                            flats.get(flats.size()-1).getImgs().add("https://i.pinimg.com/736x/30/30/e3/3030e3fa40eb4fd810320bbff7f0a1c4.jpg");
+                        }
+
+
+
+
                     }
                 } catch (SQLException e) {
                     // pass
@@ -179,5 +202,9 @@ public class Flats_Repository {
 
     public List<Flat> getFlats() {
         return flats;
+    }
+
+    public List<Flat> getNFlats(int n) {
+        return flats.subList(0, n);
     }
 }
