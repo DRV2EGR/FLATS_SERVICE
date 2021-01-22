@@ -2,11 +2,12 @@ package com.flats.Models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.flats.Models.DAO.FlatImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Flat {
+public class Flat implements FlatImpl {
     String adress;
     int numOfRooms;
     Owner owner;

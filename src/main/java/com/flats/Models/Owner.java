@@ -3,8 +3,9 @@ package com.flats.Models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.flats.Models.DAO.OwnerImpl;
 
-public class Owner {
+public class Owner implements OwnerImpl {
     String name;
     String secondName;
     int phone;

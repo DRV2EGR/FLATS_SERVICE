@@ -2,11 +2,11 @@ package com.flats.entity.enums;
 
 public enum UserRoleEnum {
 
-    ADMIN,
-    USER,
-    ANONYMOUS;
+        ADMIN,
+        USER,
+        ANONYMOUS;
 
-    UserRoleEnum() {
-    }
+        UserRoleEnum() {
+        }
 
 }

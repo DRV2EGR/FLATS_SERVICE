@@ -1,16 +1,16 @@
-.content {
+.my-content {
     margin: 0 auto;
     display: flex;
     flex-direction: row;
 }
-.section {
+.my-section {
     margin: 0 auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
     width: 100%;
 }
-.card {
+.my-card {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -19,7 +19,7 @@
     word-wrap: inherit;
     background: #84a4cb;
 }
-img {
+.my-img {
     width: 250px;
     height: 300px;
     padding: 15px;
@@ -37,11 +37,11 @@ a {
     text-decoration: none;
     text-decoration-line: none;
 }
-.card-content {
+.my-card-content {
     margin-top: 30px;
     margin-left: 50px;
 }
-.price {
+.my-price {
     color: black;
     font-weight: bold;
     font-size: 2em;
