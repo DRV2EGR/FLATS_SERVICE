@@ -11,7 +11,7 @@
         <div class="left">
 
         </div>
-        <div
+        <div></div>
     </div>
 
     <div class="content">
