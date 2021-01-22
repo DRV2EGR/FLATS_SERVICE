@@ -4,58 +4,15 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <style>
-        .content {
-            margin: 0 auto;
-            display: flex;
-
-            flex-direction: row;
-        }
-
-        .section {
-            margin: 0 auto;
-            padding: 10px;
-
-            display: flex;
-            flex-direction: column;
-
-            width: 100%;
-        }
-
-        .card {
-            display: flex;
-            flex-direction: row;
-
-            width: 100%;
-            height: 350px;
-            margin: 10px;
-
-            word-wrap: inherit;
-
-            background: #84a4cb;
-        }
-
-        .img {
-            width: 300px;
-        }
-
-        p {
-            color: black;
-        }
-
-        h3 {
-            color: black;
-            font-weight: bold;
-        }
-
-        a {
-            text-decoration: none;
-            text-decoration-line: none;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/index.css" >
 </head>
 <body>
+    <div class="header">
+        <div class="left">
+
+        </div>
+        <div
+    </div>
 
     <div class="content">
         <div class="section">
@@ -65,11 +22,11 @@
 
                     <div class="card">
                         <div class="img">
-
+                            <img src="${flat.getImgByIndex(0)}">
                         </div>
 
                         <div class="card-content">
-                            <p>${flat.getPrice()}</p>
+                            <p>Цена: <span class="price">${flat.getPrice()}</span></p>
 
                             <p>${flat.getAdress()}</p>
 
@@ -85,5 +42,18 @@
         </div>
     </div>
 
+    <script>
+        function moneyFormat(n) {
+
+            return parseFloat(n).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1 ").replace('.', ',');
+        }
+
+
+        let prices = document.getElementsByClassName("price");
+
+        for (i = 0; i < prices.length; ++i) {
+            prices[i].textContent = moneyFormat(prices[i].textContent);
+        }
+    </script>
 </body>
 </html>

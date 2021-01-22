@@ -1,16 +1,16 @@
-package com.flats.Controllers;
+package com.flats.controller;
 
 import com.flats.Models.Flat;
 import com.flats.Models.Owner;
 import com.flats.Repositiries.Flats_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 
 import java.util.List;
 
@@ -47,12 +47,41 @@ public class restfull {
 
     // TODO: Добавить методы отображений просто квартиры и просто челика
 
-    @RequestMapping("/ind")
-    public String index(Model model) {
-        myFlatsRep.refresh();
+    /**
+     * Отрисовка основной страницы без параметров
+     * @apiNote JSP page
+     *
+     * TODO: add MVC Controller
+     *
+     * @param model - модель отрисовки MVC Controller
+     * @return - имя jsp файла страницы.
+     */
+    @RequestMapping("/")
+    public String index(Model model, Authentication authentication) {
+        myFlatsRep.refresh(); // Обновляем базу
 
-        model.addAttribute("flats", myFlatsRep.getFlats());
+        // На случай, если менее 20
+        int flatsCounter = myFlatsRep.getFlats().size();
+        int n = 0;
+        if (myFlatsRep.getFlats().size() >= 20) {
+            n = flatsCounter;
+        } else {
+            n = myFlatsRep.getFlats().size();
+        }
+
+        //Страничный счетчик
+        int devidedForPagesFlats = flatsCounter / 20;
+        if (flatsCounter % 20 != 0) { devidedForPagesFlats+=1; }
+
+        model.addAttribute("flats", myFlatsRep.getNFlats(n)); // Сами квартиры выбранной страницы (сейчас т.к. главная - первые n aka. 20)
+        model.addAttribute("flatsPages", devidedForPagesFlats); // Сколько страниц с квартирами
         //System.out.println(myFlatsRep.getFlats());
+
+        try {
+            System.out.println(authentication.getName());
+        } catch (Exception e) {
+            //pass
+        }
 
         return "index";
     }
